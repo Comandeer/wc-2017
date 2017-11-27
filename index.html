@@ -1,0 +1,502 @@
+<!doctype HTML>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>Web Components</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Web Components</h2>
+					<p>Nowa stara era</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Trochę historii</h2>
+					</section>
+
+					<section>
+						<h2>
+							<img src="images/w3c.png" alt="W3C" width="200" height="200">
+						</h2>
+
+						<ul>
+							<li class="fragment">HTML nie pasuje do nowoczesnej Sieci</li>
+							<li class="fragment">Mit semantycznej Sieci</li>
+							<li class="fragment">Gonitwa za marą XHTML 2.0</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>
+							<img src="images/whatwg.svg" alt="WHATWG" width="200" height="200">
+						</h2>
+
+						<ul>
+							<li class="fragment">XHTML nie pasuje do nowoczesnej Sieci</li>
+							<li class="fragment">Razem, ale jednak osobno</li>
+							<li class="fragment">Web Forms 2.0</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>
+							<img src="images/html5.svg" alt="HTML5" width="200" height="200">
+						</h2>
+
+						<ul>
+							<li class="fragment">
+								<a href="https://medium.com/content-uneditable/the-great-world-of-open-web-standards-64c1fe53063" hreflang="en">HTML 5 i HTML</a>
+							</li>
+							<li class="fragment">Osobno, ale jednak razem</li>
+							<li class="fragment">Jedyny język Sieci</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>I co dalej?</h2>
+
+						<ul>
+							<li class="fragment">
+								<a href="https://extensiblewebmanifesto.org/" hreflang="en">The Extensible Web Manifesto</a>
+							</li>
+							<li class="fragment">"Dajcie nam fundamenty, a my postawimy dom!"</li>
+							<li class="fragment">Web Components fundamentem nowej Sieci?</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Czemu?</h2>
+					</section>
+
+					<section>
+						<h2>HTML nie jest "semantyczny"</h2>
+					</section>
+
+					<section>
+						<h2>Przeglądarki nie udostępniają enkapsulacji</h2>
+					</section>
+
+					<section>
+						<h2>HTML nie jest reużywalny</h2>
+					</section>
+
+					<section>
+						<h2>Sieć nie ma standardowego systemu szablonów</h2>
+					</section>
+
+					<section>
+						<h2>Za mało deklaratywności!</h2>
+					</section>
+				</section>
+
+
+				<section>
+					<h2>Inne/starsze rozwiązania</h2>
+
+					<ul>
+						<li class="fragment"><code>iframe</code></li>
+						<li class="fragment">
+							<a href="https://mustache.github.io/" hreflang="en">Mustache</a>
+						</li>
+						<li class="fragment">
+							<a href="https://reactjs.org/" hreflang="en">React</a>
+						</li>
+						<li class="fragment">
+							<a href="https://angularjs.org/" hreflang="en">AngularJS 1.x</a>
+						</li>
+						<li class="fragment">
+							<a href="https://angular.io/" hreflang="en">Angular 2+</a>
+						</li>
+						<li class="fragment">
+							<a href="https://github.com/css-modules/css-modules" hreflang="en">CSS Modules</a>
+						</li>
+						<li class="fragment">
+							<a href="https://blog.comandeer.pl/html-css/javascript/daj-sie-poznac-2017/2017/05/12/bem-jako-architektura.html">BEM</a>
+						</li>
+						<li class="fragment">
+							<a href="https://www.w3.org/TR/xhtml2/" hreflang="en">XHTML 2.0</a> + <a href="https://www.w3.org/TR/REC-xml-names/" hreflang="en">XML namespaces</a>
+						</li>
+						<li class="fragment">
+							<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XBL" hreflang="en">XBL</a>
+						</li>
+						<li class="fragment">
+							<a href="http://web.archive.org/web/20160704132427/http://html6spec.com/" hreflang="en">HTML6</a>
+						</li>
+						<li class="fragment">
+							<a href="https://www.w3.org/TR/NOTE-HTMLComponents" hreflang="en">HTML Components</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Potrzeba semantyki</h2>
+
+					<ul>
+						<li class="fragment">HTML jest semantyczny tylko dla <b>użytkownika końcowego</b></li>
+						<li class="fragment">Developerzy też są użytkownikami!</li>
+						<li class="fragment">UX vs DX</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Potrzeba semantyki</h2>
+
+					<pre class="fragment"><code class="hljs" data-trim><article>
+	<h2>Slider</h2>
+
+	<section>
+		<h3>Slide</h3>
+		<img src="slide.svg" alt="Cóż za piękny slajd!">
+	</section>
+</article></code></pre>
+
+					<p class="fragment">vs</p>
+
+					<pre class="fragment"><code class="hljs" data-trim=""><x-slider>
+	<x-slide>
+		<x-slide-title>Slide</x-slide-title>
+		<x-slide-image src="slide.svg">Cóż za piękny slajd!</x-slide-image>
+	</x-slide>
+</x-slider></code></pre>
+				</section>
+
+				<section>
+					<h2>Custom Elements!</h2>
+
+					<ul>
+						<li class="fragment">Standard pozwalający tworzyć własne znaczniki</li>
+						<li class="fragment">(Teoretycznie) łatwy sposób rozszerzania istniejących znaczników</li>
+						<li class="fragment">Cykl życia elementów</li>
+						<li class="fragment">Wykrywanie na żywo i "ulepszanie"</li>
+						<li class="fragment">Specjalna konwencja nazewnicza – <code>prefiks-nazwa</code></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Nowy Custom Element</h2>
+
+					<pre class="fragment"><code class="hljs" data-trim>class XSlider extends HTMLElement {}
+window.customElements.define( 'x-slider', XSlider );</code></pre>
+
+					<pre class="fragment"><code class="hljs" data-trim><x-slider></x-slider></code></pre>
+				</section>
+
+				<section>
+					<section>
+						<h2>Rozszerzanie natywnych znaczników</h2>
+
+						<pre class="fragment"><code class="hljs" data-trim>class XButton extends HTMLButtonElement {}
+window.customElements.define( 'x-button', XButton, { extends: 'button' } );</code></pre>
+
+						<pre class="fragment"><code class="hljs" data-trim><button is="x-button"></button></code></pre>
+					</section>
+
+					<section>
+						<h2>Czemu to nie działa?</h2>
+
+						<ul>
+							<li class="fragment">Opór ze strony Apple</li>
+							<li class="fragment">
+								<a href="https://github.com/w3c/webcomponents/issues/509" hreflang="en">Absurdalne dyskusje</a>
+							</li>
+							<li class="fragment">
+								<a href="https://medium.com/content-uneditable/we-need-behaviors-not-inheritance-978484dfec24" hreflang="en">Potrzebujemy zachowań, nie dziedziczenia</a>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section>
+					<h2>Problemy z Custom Elements</h2>
+
+					<ul>
+						<li class="fragment">Brak domyślnej semantyki…</li>
+						<li class="fragment">…zatem brak domyślnej dostępności</li>
+						<li class="fragment">
+							<a href="https://www.w3.org/WAI/intro/aria.php" hreflang="en">ARIA na ratunek!</a>
+						</li>
+						<li class="fragment">
+							<a href="https://www.paciellogroup.com/blog/2016/04/custom-element-semantics/" hreflang="en"><code>taco-button</code></a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Natywny system szablonów</h2>
+
+					<ul>
+						<li class="fragment">Wszystkie obecne systemy szablonów są tekstowe…</li>
+						<li class="fragment">…ale DOM to drzewko</li>
+						<li class="fragment">Drzewko w szablonach?</li>
+						<li class="fragment">Jak "wyłączyć" część DOM (np. aby obrazki się nie wczytywały)?</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2><code>template</code></h2>
+
+					<ul>
+						<li class="fragment">Zawiera wyłączone poddrzewko DOM</li>
+						<li class="fragment">Dopiero włożenie na stronę "ożywia" drzewko</li>
+						<li class="fragment">A pod spodem stary, dobry <code>DocumentFragment</code></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Praca z <code>template</code></h2>
+
+					<pre class="fragment"><code class="hljs" data-trim><template id="image">
+	<img src="" alt="">
+</template>
+<div id="image-container"></div></code></pre>
+
+					<pre class="fragment"><code class="hljs" data-trim>const template = document.getElementById('image').content;
+const img = template.querySelector( 'img' );
+
+img.src = '/whatever.png';
+img.alt = 'A taki tam obrazek';
+
+const parsed = document.importNode( template, true );
+
+document.getElementById( 'image-container' ).appendChild( parsed );</code></pre>
+				</section>
+
+				<section>
+					<h2>Idzie nowe!</h2>
+
+					<ul>
+						<li class="fragment">Silna potrzeba standaryzacji tekstowego języka szablonów</li>
+						<li class="fragment">
+							<a href="https://github.com/w3c/webcomponents/blob/gh-pages/proposals/Template-Instantiation.md" hreflang="en">Propozycja Apple</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Potrzeba enkapsulacji</h2>
+
+					<ul>
+						<li class="fragment">HTML i CSS ciekną</li>
+						<li class="fragment">Wszystko ląduje w globalnym zakresie</li>
+						<li class="fragment">Wszystko wchodzi w interakcję ze wszystkim</li>
+						<li class="fragment">Nie można ukryć szczegółów implementacji (patrz: <code>video</code>)</li>
+						<li class="fragment">Konwencje pomagają, ale są tylko konwencjami</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Dwa DOM-y</h2>
+
+						<ul>
+							<li class="fragment">Light DOM</li>
+							<li class="fragment">Shadow DOM</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Light DOM</h2>
+
+						<div>
+							<img src="images/light.png" alt="">
+						</div>
+					</section>
+
+					<section>
+						<h2>Shadow DOM</h2>
+
+						<div>
+							<img src="images/shadow.png" alt="">
+						</div>
+					</section>
+				</section>
+
+				<section>
+					<h2>Granica cienia</h2>
+
+					<ul>
+						<li class="fragment">Ukrywa wszystkie szczegóły implementacji</li>
+						<li class="fragment">Żadne style nie wyciekają</li>
+						<li class="fragment">Nic nie wycieka do Light DOM…</li>
+						<li class="fragment">…więc jesteśmy zmuszeni stworzyć sensowne API</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Light DOM vs Shadow DOM</h2>
+
+					<pre class="fragment"><code class="hljs" data-trim><x-collapsible>
+	<button>Zwiń</button>
+
+	<div>
+		<p>Jakaś treść</p>
+	</div>
+	<script>button.onclick = collapseDiv;</script>
+</x-collapsible></code></pre>
+
+					<p class="fragment">vs</p>
+
+					<pre class="fragment"><code class="hljs" data-trim><x-collapsible>
+	<p>Jakaś treść</p>
+</x-collapsible></code></pre>
+
+					<p class="fragment">
+						<a href="https://w3c.github.io/webcomponents/spec/shadow/#shadow-dom-example" hreflang="en">Bardziej skomplikowany przykład</a></p>
+				</section>
+
+
+
+				<section>
+					<h2>Sloty</h2>
+
+					<ul>
+						<li class="fragment">Sloty to zaślepki</li>
+						<li class="fragment">Czekają na treść</li>
+						<li class="fragment">Algorytm Dystrybucji Węzłów</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Idzie nowe!</h2>
+
+					<ul>
+						<li class="fragment">
+							<a href="https://github.com/whatwg/dom/issues/510" hreflang="en">Deklaratywny Shadow DOM</a>
+						</li>
+						<li class="fragment">Lepsze wsparcie dla SSR i SEO</li>
+						<li class="fragment">Lepsze wsparcie dla Virtual DOM…</li>
+						<li class="fragment">…czyli święty graal odizolowania logiki od prezentacji</li>
+						<li class="fragment">
+							<a href="https://blog.comandeer.pl/javascript/2017/10/31/deklaratywny-shadow-dom.html">Można symulować już dziś!</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>HTML jako moduł</h2>
+
+					<ul>
+						<li class="fragment">Mamy moduły ES</li>
+						<li class="fragment">Mamy znacznik <code>script</code></li>
+						<li class="fragment">Mamy znacznik <code>link</code></li>
+						<li class="fragment">Przez długi czas HTML można było użyć ponownie wyłącznie przy pomocy <code>iframe</code> lub <code>object</code></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>HTML Imports</h2>
+
+					<p class="fragment">Pozwalają zapakować nasz komponent do osobnego pliku HTML:</p>
+					<pre class="fragment"><code class="hljs" data-trim><style>[…]</style>
+<script>[…]</script></code></pre>
+					<p class="fragment">A następnie zaimportować do aplikacji:</p>
+					<pre class="fragment"><code class="hljs" data-trim><link rel="import" href="component.html"></code></pre>
+				</section>
+
+				<section>
+					<h2>HTML Imports a moduły ES</h2>
+
+					<ul>
+						<li class="fragment">Nikt, oprócz Chrome'a, nie chce HTML Imports</li>
+						<li class="fragment">Prawdopodobnie zastąpi je <a href="https://github.com/w3c/webcomponents/blob/gh-pages/proposals/HTML-Imports-and-ES-Modules.md" hreflang="en">podtyp modułów ES</a></li>
+						<li class="fragment">
+							<a href="https://github.com/TheLarkInn/unity-component-specification" hreflang="en">Społeczność chce deklaratywności</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Standaryzacja</h2>
+
+					<ul>
+						<li class="fragment">Web Components mają stać się integralną częścią standardów HTML i DOM…</li>
+						<li class="fragment">…co już się stało w wersji od WHATWG</li>
+						<li class="fragment">W3C się opiera</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Wsparcie</h2>
+
+					<ul>
+						<li class="fragment">Can I Use kłamie!</li>
+						<li class="fragment">Wciąż w proszku – <a href="http://webroad.pl/javascript/3505-web-components">po <strong>4 latach</strong></a></li>
+						<li class="fragment">
+							<a href="https://github.com/webcomponents/webcomponentsjs" hreflang="en">Bez polyfilla nie podchodź</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Częste wpadki</h2>
+
+					<ul>
+						<li class="fragment">Nie wszystko jest komponentem…</li>
+						<li class="fragment">…a przynajmniej <a href="https://shop.polymer-project.org/">nie deklaratywnym</a>!</li>
+						<li class="fragment">Logika niezwiązana z UI wewnątrz Custom Element? Meh.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>2 filary architektury</h2>
+
+					<ul>
+						<li class="fragment">Całkowicie niezależne UI, stworzone przy pomocy Web Components</li>
+						<li class="fragment">Logika biznesowa w JS</li>
+						<li class="fragment">Zdarzenia lub pub/sub jako jedyna metoda komunikacji</li>
+						<li class="fragment">
+							<a href="http://www.slideshare.net/nzakas/scalable-javascript-application-architecture" hreflang="en">Zakas łapie o co chodzi</a>
+						</li>
+						<li class="fragment">
+							<a href="https://dassur.ma/things/120fps/" hreflang="en">Googlersi też</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>I to by było na tyle</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
